@@ -7,3 +7,8 @@
 Si tu comentario es mayor a dos lieas van dentro de 3 comillas
 """
 
+#2. Strings
+
+print("Hola mundo")
+print('Hola soy una linea de comando')
+
