@@ -5,8 +5,8 @@ try:
 
     print("Resultado:", resultado)
 
-except ValueError:
+except (ValueError, ZeroDivisionError) as e:
     print("Error: Se ingresó algo que no es número entero.")
     
-except ZeroDivisionError:
+else:
     print("Error: Estás intentando dividir entre 0")
