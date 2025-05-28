@@ -9,6 +9,9 @@ while True:
 
             print("No debes de ingresar números.")
             
+            raise TypeError()
+            break
+            
         contador = 0
 
         for c in frase:
@@ -16,7 +19,7 @@ while True:
                 contador +=1
 
 
-        print(f"El la cantidad de veces que aparece {letra} en {frase} es: {contador}")
+        print(f"La cantidad de veces que aparece ""{letra}"" en ""{frase}"" es: {contador} veces" )
         
     except (ValueError, TypeError):
         
