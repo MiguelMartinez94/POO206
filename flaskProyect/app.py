@@ -30,6 +30,11 @@ def dobleRoute():
 @app.route('/usuario', methods = ['POST'])
 def formulario():
     return 'Soy un formulario'
+
+@app.errorhandler(405)
+def metodoNoPermitido(e):
+    return 'Revisa el meotodo de envio de tu ruta (GET o POST)', 405
+
     
 if __name__ == '__main__':
     
