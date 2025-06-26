@@ -7,6 +7,43 @@
 </head>
 <body>
     <h2>Vista de consulta</h2>
-    <a href="/">Abrir vista formulario</a>
+    <a href="/">Regresar a Formualario</a>
+
+    <table>
+        <thead>
+            <tr>
+                <td>ID:</td>
+                <td>Album:</td>
+                <td>Artista:</td>
+                <td>Año:</td>
+            </tr>
+        </thead>
+        <tbody>
+            
+            <tr>
+                <td>{{album.0}}</td>
+                <td>{{album.1}}</td>
+                <td>{{album.2}}</td>
+                <td>{{album.3}}</td>
+                <td><a href="#">Actualizar</a></td>
+                <td><a href="#">Eliminar</a></td>
+            </tr>
+            
+            
+        </tbody>
+    </table>
+
+
+    <br>
+
+    {%with mensajes =  get_flashed_messages()%}
+
+        {% if mensajes%}
+
+            {% for msj in mensajes%}
+                <h4 style="color: blue">{{msj}}</h4>
+            {%endfor%}
+        {% endif %}
+    {%endwith%}
 </body>
 </html>

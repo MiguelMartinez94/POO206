@@ -42,7 +42,35 @@ def metodoNoPermitido(e):
 #Ruta de inicio
 @app.route('/')
 def home():
-    return render_template('formulario.html')
+    try:
+        cursor = mysql.connection.cursor()
+        cursor.execute('select * from albums')
+        consultaTodo = cursor.fetchall()
+        return render_template('formulario.html', errores={}, albums = consultaTodo)
+        
+    except Exception as e:
+        print('Error al consultar todo: ' + e)
+        return render_template('formulario.html', errores={}, albums = {})
+        
+    finally:
+        cursor.close()
+        
+@app.route('/detalle/<int:id>')
+def detalle(id):
+    try:
+        cursor = mysql.connection.cursor()
+        cursor.execute('select * from albums where id = %s', (id,))
+        consultaId = cursor.fetchone()
+        return render_template('consulta.html', album = consultaId)
+        
+    except Exception as e:
+        print('Error al consultar todo: ' + e)
+        return render_template('consulta.html', errores={}, albums = {})
+        
+    finally:
+        cursor.close()
+
+
 
 #Ruta de consulta
 @app.route('/consulta')
