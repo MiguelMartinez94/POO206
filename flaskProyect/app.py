@@ -55,6 +55,8 @@ def home():
     finally:
         cursor.close()
         
+        
+#Ruta para cargar datos de detalle        
 @app.route('/detalle/<int:id>')
 def detalle(id):
     try:
@@ -69,6 +71,69 @@ def detalle(id):
         
     finally:
         cursor.close()
+
+#Ruta para cargar datos a actualizar        
+@app.route('/actualizar/<int:id>')
+def consulta_actualizar(id):
+    try:
+        cursor = mysql.connection.cursor()
+        cursor.execute('select * from albums where id = %s', (id,))
+        album = cursor.fetchone()
+        return render_template('update.html', album = album)
+        
+    except Exception as e:
+        print('Error al consultar todo: ' + e)
+        return render_template('update.html', errores={}, albums = {})
+        
+    finally:
+        cursor.close()
+
+#Ruta para actualizar los datos modificados
+@app.route('/modificarAlbum', methods= ['POST'])
+def guardar_actualizaciones():
+        
+    #lista de errores
+    errores = {}
+    
+    #Obtener los datos a modificar
+    idUpdate = request.form.get('id', '').strip()
+    nTitulo = request.form.get('ntxtTitulo', '').strip()
+    nArtista = request.form.get('ntxtArtista', '').strip()
+    nAnio = request.form.get('ntxtAnio', '').strip()
+    
+    if not nTitulo:
+        errores['ntxtTitulo'] = 'Nombre del álbum obligatorio'
+        
+    if not nArtista:
+        errores['ntxtArtista'] = 'Nombre del artista obligatorio'
+        
+    if not nAnio:
+        errores['ntxtAnio'] = 'Año del álbum obligatorio'
+        
+    elif not nAnio.isdigit() or int(nAnio) < 1800 or int(nAnio) > 2050:
+        errores['ntxtAnio'] = 'Ingresa un año válido'
+        
+    if not errores:
+    
+    #Intentamos ejecutar el UPDATE
+    
+        try:
+            cursor = mysql.connection.cursor()
+            cursor.execute('update albums set album = %s, artista = %s, anio = %s where id = %s', (nTitulo, nArtista, nAnio, idUpdate))
+            mysql.connection.commit()
+            flash('Album se actualizó correctamente')
+            return redirect(url_for('home'))
+            
+        except Exception as e:
+            mysql.connection.rollback()
+            flash( f'Algo falló: {str(e)}')
+            return redirect(url_for('home'))
+            
+        finally:
+            
+            cursor.close()
+        
+    return render_template('update.html',album=(id, nTitulo, nArtista, nAnio), errores = errores, )
 
 
 
