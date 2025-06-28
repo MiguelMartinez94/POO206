@@ -133,7 +133,7 @@ def guardar_actualizaciones():
             
             cursor.close()
         
-    return render_template('update.html',album=(id, nTitulo, nArtista, nAnio), errores = errores, )
+    return render_template('update.html',album=(idUpdate, nTitulo, nArtista, nAnio), errores = errores, )
 
 
 
