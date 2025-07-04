@@ -44,7 +44,7 @@ def metodoNoPermitido(e):
 def home():
     try:
         cursor = mysql.connection.cursor()
-        cursor.execute('select * from albums')
+        cursor.execute('select * from albums where state = 1')
         consultaTodo = cursor.fetchall()
         return render_template('formulario.html', errores={}, albums = consultaTodo)
         
@@ -186,7 +186,46 @@ def guardar():
             cursor.close()
     
     return render_template('formulario.html', errores = errores)
+
+@app.route('/eliminacion/<int:id>')
+def eliminar(id):
     
+    flash('¿Deseas Eliminar este album?')
+    
+    try:
+        cursor = mysql.connection.cursor()
+        cursor.execute('select * from albums where id = %s', (id,))
+        consultaId = cursor.fetchone()
+        return render_template('confirmDel.html', album = consultaId)
+        
+    except Exception as e:
+        print('Error al consultar todo: ' + e)
+        return render_template('confirmDel.html', albums = {})
+        
+    finally:
+        cursor.close()
+
+
+@app.route('/confirmar_eliminacion/<int:id>', methods=['POST'])
+def confirmarEliminacion(id):
+    
+    try:
+        
+        cursor = mysql.connection.cursor()
+        cursor.execute('UPDATE albums SET state = 0 WHERE id = %s', (id,))
+        mysql.connection.commit()
+        flash('Álbum eliminado correctamente')
+        return redirect(url_for('home'))
+        
+    except Exception as e:
+        mysql.connection.rollback()
+        flash(f'Error al eliminar: {str(e)}')
+    finally:
+        cursor.close()
+
+
+
+
 if __name__ == '__main__':
     
     app.run(port=3000, debug = True)

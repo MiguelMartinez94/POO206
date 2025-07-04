@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmar Eliminación</title>
+</head>
+<body>
+
+    <h1>Confirmación de Eliminación</h1>
+
+    <a href="/">Regresar a Formualario</a>
+
+    {%with mensajes =  get_flashed_messages()%}
+
+        {% if mensajes%}
+
+            {% for msj in mensajes%}
+                <h4 style="color: blue">{{msj}}</h4>
+            {%endfor%}
+        {% endif %}
+    {%endwith%}
+
+    <form action="/confirmar_eliminacion/{{album.0}}" method="post">
+
+        <input type="text" name="txtTitulo" placeholder="Título" value="{{album.1}}" disabled>
+
+
+
+
+        <input type="text" name="txtArtista" placeholder="Artista" value="{{album.2}}" disabled>
+
+
+
+
+        <input type="number" name="txtAnio" placeholder="Año de publicación" value="{{ album.3}}" disabled>
+
+
+            
+
+
+        <button type="submit">Eliminar</button>
+
+    </form>
+    
+</body>
+</html>
