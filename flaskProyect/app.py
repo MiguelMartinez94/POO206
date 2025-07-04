@@ -39,6 +39,7 @@ def paginaNoE(e):
 def metodoNoPermitido(e):
     return 'Revisa el meotodo de envio de tu ruta (GET o POST)', 405
 
+
 #Ruta de inicio
 @app.route('/')
 def home():
@@ -55,7 +56,6 @@ def home():
     finally:
         cursor.close()
         
-        
 #Ruta para cargar datos de detalle        
 @app.route('/detalle/<int:id>')
 def detalle(id):
@@ -71,6 +71,53 @@ def detalle(id):
         
     finally:
         cursor.close()
+        
+
+#Ruta para el insert
+@app.route('/guardarAlbum', methods = ['POST'])
+def guardar():
+    
+    #lista de errores
+    errores = {}
+    
+    #Obtener los datos a insertar
+    titulo = request.form.get('txtTitulo', '').strip()
+    artista = request.form.get('txtArtista', '').strip()
+    anio = request.form.get('txtAnio', '').strip()
+    
+    if not titulo:
+        errores['txtTitulo'] = 'Nombre del álbum obligatorio'
+        
+    if not artista:
+        errores['txtArtista'] = 'Nombre del artista obligatorio'
+        
+    if not anio:
+        errores['txtAnio'] = 'Año del álbum obligatorio'
+        
+    elif not anio.isdigit() or int(anio) < 1800 or int(anio) > 2050:
+        errores['txtAnio'] = 'Ingresa un año válido'
+        
+    if not errores:
+    #Intentamos ejecutar el INSERT
+    
+        try:
+            cursor = mysql.connection.cursor()
+            cursor.execute('insert into albums(album, artista, anio) values(%s, %s, %s)', (titulo, artista, anio))
+            mysql.connection.commit()
+            flash('Album se guardó en BD')
+            return redirect(url_for('home'))
+            
+        except Exception as e:
+            mysql.connection.rollback()
+            flash( f'Algo falló: {str(e)}')
+            return redirect(url_for('home'))
+            
+        finally:
+            
+            cursor.close()
+    
+    return render_template('formulario.html', errores = errores)        
+        
 
 #Ruta para cargar datos a actualizar        
 @app.route('/actualizar/<int:id>')
@@ -87,6 +134,7 @@ def consulta_actualizar(id):
         
     finally:
         cursor.close()
+
 
 #Ruta para actualizar los datos modificados
 @app.route('/modificarAlbum', methods= ['POST'])
@@ -137,55 +185,7 @@ def guardar_actualizaciones():
 
 
 
-#Ruta de consulta
-@app.route('/consulta')
-def consulta():
-    return render_template('consulta.html')
-
-#Ruta para el insert
-@app.route('/guardarAlbum', methods = ['POST'])
-def guardar():
-    
-    #lista de errores
-    errores = {}
-    
-    #Obtener los datos a insertar
-    titulo = request.form.get('txtTitulo', '').strip()
-    artista = request.form.get('txtArtista', '').strip()
-    anio = request.form.get('txtAnio', '').strip()
-    
-    if not titulo:
-        errores['txtTitulo'] = 'Nombre del álbum obligatorio'
-        
-    if not artista:
-        errores['txtArtista'] = 'Nombre del artista obligatorio'
-        
-    if not anio:
-        errores['txtAnio'] = 'Año del álbum obligatorio'
-        
-    elif not anio.isdigit() or int(anio) < 1800 or int(anio) > 2050:
-        errores['txtAnio'] = 'Ingresa un año válido'
-        
-    if not errores:
-    #Intentamos ejecutar el INSERT
-    
-        try:
-            cursor = mysql.connection.cursor()
-            cursor.execute('insert into albums(album, artista, anio) values(%s, %s, %s)', (titulo, artista, anio))
-            mysql.connection.commit()
-            flash('Album se guardó en BD')
-            return redirect(url_for('home'))
-            
-        except Exception as e:
-            mysql.connection.rollback()
-            flash( f'Algo falló: {str(e)}')
-            return redirect(url_for('home'))
-            
-        finally:
-            
-            cursor.close()
-    
-    return render_template('formulario.html', errores = errores)
+#Ruta para cargar datos a eliminar
 
 @app.route('/eliminacion/<int:id>')
 def eliminar(id):
@@ -205,6 +205,7 @@ def eliminar(id):
     finally:
         cursor.close()
 
+#Confirmación de la eliminación
 
 @app.route('/confirmar_eliminacion/<int:id>', methods=['POST'])
 def confirmarEliminacion(id):
