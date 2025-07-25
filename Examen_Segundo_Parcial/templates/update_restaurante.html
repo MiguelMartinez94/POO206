@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modificación</title>
+</head>
+<body>
+
+    <h1>Modificar Campos</h1>
+
+    {%with mensajes =  get_flashed_messages()%}
+
+        {% if mensajes%}
+
+            {% for msj in mensajes%}
+                <h4 style="color: blue">{{msj}}</h4>
+            {%endfor%}
+        {% endif %}
+    {%endwith%}
+
+
+    
+    <form action="/modificarRestaurante" method="post">
+
+        <input type="hidden" name="idUpdate" value="{{restaurante.0}}">
+
+        <input type="text" name="nrestaurante" placeholder="Restaurante" value="{{restaurante.1}}">
+
+            {% if errores and errores.nrestaurante%}
+
+                <p style="color: red">{{errores.nrestaurante}}</p>
+                
+            {% endif %}
+
+
+        <input type="text" name="ntipo" placeholder="Tipo de Comida" value="{{restaurante.2}}">
+
+            {% if errores and errores.ntipo%}
+
+                <p style="color: red">{{errores.ntipo}}</p>
+                
+            {% endif %}
+
+
+        <input type="text" name="ncomentario" placeholder="Comentarios C:" value="{{restaurante.3}}">
+
+
+            {% if errores and errores.ncomentario%}
+
+                <p style="color: red">{{errores.ncomentario}}</p>
+                
+            {% endif %}
+
+        <input type="number" name="ncalificacion" placeholder="Calificación: 1-5" value="{{restaurante.5}}">
+
+
+            {% if errores and errores.ncalificacion%}
+
+                <p style="color: red">{{errores.ncalificacion}}</p>
+                
+            {% endif %}
+
+
+        <button type="submit">Modificar Registro</button>
+
+    </form>
+
+
+</body>
+</html>

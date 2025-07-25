@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle del Restaurante</title>
+</head>
+<body>
+
+
+    <h1>Detalle del Restaurante</h1>
+
+    {%with mensajes =  get_flashed_messages()%}
+
+        {% if mensajes%}
+
+            {% for msj in mensajes%}
+                <h4 style="color: blue">{{msj}}</h4>
+            {%endfor%}
+        {% endif %}
+    {%endwith%}
+
+
+    <table border="1">
+
+        <thead>
+                <td>ID</td>
+                <td>Restaurante</td>
+                <td>Tipo de comida</td>
+                <td>Comentario</td>
+                <td>Calificación</td>
+                
+
+        </thead>
+
+
+        <tbody>
+
+            
+            <tr>
+                <td>{{restaurante.0}}</td>
+                <td>{{restaurante.1}}</td>
+                <td>{{restaurante.2}}</td>
+                <td>{{restaurante.3}}</td>
+                <td>{{restaurante.4}}</td>
+                <td><a href="/actualizar_restaurante/{{restaurante.0}}">Actualizar</a></td>
+                <td><a href="/eliminar_restaurante/{{restaurante.0}}">Eliminar</a></td>
+            </tr>
+        
+
+        </tbody>
+    </table>
+    
+</body>
+</html>

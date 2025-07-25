@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de restaurante</title>
+</head>
+<body>
+
+<h1>Registro de restaurante</h1>
+
+{%with mensajes =  get_flashed_messages()%}
+
+        {% if mensajes%}
+
+            {% for msj in mensajes%}
+                <h4 style="color: blue">{{msj}}</h4>
+            {%endfor%}
+        {% endif %}
+    {%endwith%}
+
+
+    <form action="/guardarRestaurante" method="post">
+
+        <input type="text" name="restaurante" placeholder="Restaurante" value="">
+
+            {% if errores and errores.restaurante%}
+
+                <p style="color: red">{{errores.restaurante}}</p>
+                
+            {% endif %}
+
+
+        <input type="text" name="tipo" placeholder="Tipo de Comida" value="">
+
+            {% if errores and errores.tipo%}
+
+                <p style="color: red">{{errores.tipo}}</p>
+                
+            {% endif %}
+
+
+        <input type="text" name="comentario" placeholder="Comentarios C:" value="">
+
+
+            {% if errores and errores.comentario%}
+
+                <p style="color: red">{{errores.comentario}}</p>
+                
+            {% endif %}
+
+        <input type="number" name="calificacion" placeholder="Calificación: 1-5" value="">
+
+
+            {% if errores and errores.calificacion%}
+
+                <p style="color: red">{{errores.calificacion}}</p>
+                
+            {% endif %}
+
+
+        <button type="submit">Registrar Restaurante</button>
+
+    </form>
+
+    <br>
+    <br>
+    <br>
+    
+
+    <table border="1">
+
+        <thead>
+                <td>ID</td>
+                <td>Restaurante</td>
+                <td>Tipo de comida</td>
+                <td>Comentario</td>
+                <td>Calificación</td>
+                
+
+        </thead>
+
+
+        <tbody>
+
+            {%for restaurante in restaurantes%}
+            <tr>
+                <td>{{restaurante.0}}</td>
+                <td><a href="/detalle_restaurante/{{restaurante.0}}">{{restaurante.1}}</a></td>
+                <td>{{restaurante.2}}</td>
+                <td>{{restaurante.3}}</td>
+                <td>{{restaurante.4}}</td>
+            </tr>
+            {%endfor%}
+
+        </tbody>
+    </table>
+    
+</body>
+</html>

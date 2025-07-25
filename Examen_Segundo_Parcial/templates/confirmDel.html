@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elimnacion</title>
+</head>
+<body>
+
+    <h1>Eliminar Restaurante</h1>
+
+    {%with mensajes =  get_flashed_messages()%}
+
+        {% if mensajes%}
+
+            {% for msj in mensajes%}
+                <h4 style="color: blue">{{msj}}</h4>
+            {%endfor%}
+        {% endif %}
+    {%endwith%}
+    
+
+    <form action="/confirmar_eliminacion/{{restaurante.0}}" method="post">
+
+        <input type="text" name="restaurante" placeholder="Restaurante" value="{{restaurante.2}}">
+
+            {% if errores and errores.restaurante%}
+
+                <p style="color: red">{{errores.restaurante}}</p>
+                
+            {% endif %}
+
+
+        <input type="text" name="tipo" placeholder="Tipo de Comida" value="{{restaurante.3}}">
+
+            {% if errores and errores.tipo%}
+
+                <p style="color: red">{{errores.tipo}}</p>
+                
+            {% endif %}
+
+
+        <input type="text" name="comentario" placeholder="Comentarios C:" value="{{restaurante.4}}">
+
+
+            {% if errores and errores.comentario%}
+
+                <p style="color: red">{{errores.comentario}}</p>
+                
+            {% endif %}
+
+        <input type="number" name="calificacion" placeholder="Calificación: 1-5" value="{{restaurante.5}}">
+
+
+            {% if errores and errores.calificacion%}
+
+                <p style="color: red">{{errores.calificacion}}</p>
+                
+            {% endif %}
+
+
+        <button type="submit">Eliminar Restaurante</button>
+
+    </form>
+
+</body>
+</html>
