@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actualizar</title>
+</head>
+<body>
+
+    <h2>Detalle del álbum a actualizar</h2>
+    <a href="/">Regresar a Formualario</a>
+
+
+    <table>
+        <thead>
+            <tr>
+                <td></td>
+                <td>Album:</td>
+                <td>Artista:</td>
+                <td>Año:</td>
+            </tr>
+        </thead>
+        <tbody>
+            
+            <tr>
+                <form action="/modificarAlbum" method="post">
+                    <td><input type="hidden" name="id" id="" value="{{album.0}}"></td>
+                    
+                    <td><input type="text" name="ntxtTitulo" value="{{album.1}}"></td>
+
+                        {% if errores and errores.ntxtTitulo%}
+
+                        <p style="color: red">{{errores.ntxtTitulo}}</p>
+                    
+                        {% endif %}
+
+                        
+
+
+                    <td><input type="text" name="ntxtArtista" value="{{album.2}}"></td>
+
+                        {% if errores and errores.ntxtArtista%}
+
+                        <p style="color: red">{{errores.ntxtArtista}}</p>
+                    
+                        {% endif %}
+
+                        
+
+                    <td><input type="text" name="ntxtAnio" value="{{album.3}}"></td>
+
+                        {% if errores and errores.ntxtAnio%}
+
+                        <p style="color: red">{{errores.ntxtAnio}}</p>
+                        
+                        {% endif %}
+
+
+
+                    <td><button type="submit">Guardar</button></td>
+                    
+                </form>
+            </tr>
+            
+            
+        </tbody>
+    </table>
+    
+</body>
+</html>
