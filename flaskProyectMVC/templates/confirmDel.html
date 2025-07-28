@@ -1,47 +1,50 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Confirmar Eliminación</title>
-</head>
-<body>
+{% extends 'plantilla.html'%}
 
-    <h1>Confirmación de Eliminación</h1>
+{% block body %}
 
-    <a href="/">Regresar a Formualario</a>
+    <div class="container mt-5">
 
-    {%with mensajes =  get_flashed_messages()%}
+      <div class="row">
 
-        {% if mensajes%}
+        <div class="col-md-6 offset-md-3">
 
-            {% for msj in mensajes%}
-                <h4 style="color: blue">{{msj}}</h4>
-            {%endfor%}
-        {% endif %}
-    {%endwith%}
+          <h1 class="display-4 text-danger mb-4">Confirmación de Eliminación</h1>
 
-    <form action="/confirmar_eliminacion/{{album.0}}" method="post">
+          <a href="/" class="btn btn-link mb-3">Regresar a Formulario</a>
+          
 
-        <input type="text" name="txtTitulo" placeholder="Título" value="{{album.1}}" disabled>
+          {% with mensajes = get_flashed_messages() %}
+            {% if mensajes %}
+              {% for msj in mensajes %}
+                <div class="alert alert-info">{{ msj }}</div>
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
 
+          <form action="/confirmar_eliminacion/{{album.0}}" method="post">
 
+            <div class="mb-3">
+              <input type="text" class="form-control" name="txtTitulo" placeholder="Título" value="{{album.1}}" disabled>
+            </div>
 
+            <div class="mb-3">
+              <input type="text" class="form-control" name="txtArtista" placeholder="Artista" value="{{album.2}}" disabled>
+            </div>
 
-        <input type="text" name="txtArtista" placeholder="Artista" value="{{album.2}}" disabled>
+            <div class="mb-3">
+              <input type="number" class="form-control" name="txtAnio" placeholder="Año de publicación" value="{{album.3}}" disabled>
+            </div>
 
+            <div class="d-grid gap-2">
+              <button type="submit" class="btn btn-danger">Eliminar</button>
+            </div>
 
+          </form>
 
+        </div>
 
-        <input type="number" name="txtAnio" placeholder="Año de publicación" value="{{ album.3}}" disabled>
+      </div>
 
+    </div>
 
-            
-
-
-        <button type="submit">Eliminar</button>
-
-    </form>
-    
-</body>
-</html>
+{% endblock %}

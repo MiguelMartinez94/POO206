@@ -1,49 +1,65 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>consulta</title>
-</head>
-<body>
-    <h2>Vista de consulta</h2>
-    <a href="/">Regresar a Formualario</a>
 
-    <table>
-        <thead>
-            <tr>
-                <td>ID:</td>
-                <td>Album:</td>
-                <td>Artista:</td>
-                <td>Año:</td>
-            </tr>
-        </thead>
-        <tbody>
-            
-            <tr>
+
+{% extends 'plantilla.html'%}
+
+{% block body %}
+
+    <div class="container mt-5">
+
+      <div class="row">
+
+        <div class="col-12">
+
+          <h2 class="display-4 text-primary mb-4">Vista de consulta</h2>
+
+          <a href="/" class="btn btn-link mb-3">Regresar a Formulario</a>
+
+          <table class="table table-bordered">
+
+            <thead class="table-light">
+
+
+              <tr>
+
+                <th>ID</th>
+                <th>Álbum</th>
+                <th>Artista</th>
+                <th>Año</th>
+                <th colspan="2">Acciones</th>
+
+              </tr>
+
+            </thead>
+
+
+            <tbody>
+
+              <tr>
                 <td>{{album.0}}</td>
                 <td>{{album.1}}</td>
                 <td>{{album.2}}</td>
                 <td>{{album.3}}</td>
-                <td><a href="/actualizar/{{album.0}}">Actualizar</a></td>
-                <td><a href="/eliminacion/{{album.0}}">Eliminar</a></td>
-            </tr>
+                <td><a href="/actualizar/{{album.0}}" class="btn btn-warning btn-sm">Actualizar</a></td>
+                <td><a href="/eliminacion/{{album.0}}" class="btn btn-danger btn-sm">Eliminar</a></td>
+
+              </tr>
+
+            </tbody>
             
-            
-        </tbody>
-    </table>
+          </table>
 
+          {% with mensajes = get_flashed_messages() %}
+            {% if mensajes %}
+              {% for msj in mensajes %}
+                <div class="alert alert-info mt-4">{{ msj }}</div>
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
 
-    <br>
+        </div>
 
-    {%with mensajes =  get_flashed_messages()%}
+      </div>
 
-        {% if mensajes%}
+    </div>
 
-            {% for msj in mensajes%}
-                <h4 style="color: blue">{{msj}}</h4>
-            {%endfor%}
-        {% endif %}
-    {%endwith%}
-</body>
-</html>
+{% endblock %}

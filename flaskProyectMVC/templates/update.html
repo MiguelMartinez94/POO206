@@ -1,70 +1,81 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Actualizar</title>
-</head>
-<body>
+{% extends 'plantilla.html' %}
 
-    <h2>Detalle del álbum a actualizar</h2>
-    <a href="/">Regresar a Formualario</a>
+{% block body %}
 
+<div class="container mt-5">
 
-    <table>
-        <thead>
-            <tr>
-                <td></td>
-                <td>Album:</td>
-                <td>Artista:</td>
-                <td>Año:</td>
-            </tr>
+  <div class="row">
+
+    <div class="col-12">
+
+      <h2 class="display-4 text-primary mb-4">Detalle del álbum a actualizar</h2>
+
+      <a href="/" class="btn btn-link mb-3">Regresar a Formulario</a>
+
+      <table class="table table-bordered align-middle">
+        
+        
+        <thead class="table-light">
+          
+          <tr>
+
+            <th></th>
+            <th>Álbum</th>
+            <th>Artista</th>
+            <th>Año</th>
+            <th>Acción</th>
+
+          </tr>
+
         </thead>
+
         <tbody>
-            
-            <tr>
-                <form action="/modificarAlbum" method="post">
-                    <td><input type="hidden" name="id" id="" value="{{album.0}}"></td>
-                    
-                    <td><input type="text" name="ntxtTitulo" value="{{album.1}}"></td>
+          
+          <tr>
 
-                        {% if errores and errores.ntxtTitulo%}
+            <form action="/modificarAlbum" method="post">
+              
+              <td>
+                <input type="hidden" name="id" value="{{album.0}}">
+              </td>
 
-                        <p style="color: red">{{errores.ntxtTitulo}}</p>
-                    
-                        {% endif %}
+              <td>
+                <input type="text" class="form-control" name="ntxtTitulo" value="{{album.1}}">
+                {% if errores and errores.ntxtTitulo %}
+                  <small class="text-danger">{{errores.ntxtTitulo}}</small>
+                {% endif %}
+              </td>
 
-                        
+              <td>
+                <input type="text" class="form-control" name="ntxtArtista" value="{{album.2}}">
+                {% if errores and errores.ntxtArtista %}
+                  <small class="text-danger">{{errores.ntxtArtista}}</small>
+                {% endif %}
+              </td>
 
+              <td>
+                <input type="text" class="form-control" name="ntxtAnio" value="{{album.3}}">
+                {% if errores and errores.ntxtAnio %}
+                  <small class="text-danger">{{errores.ntxtAnio}}</small>
+                {% endif %}
+              </td>
 
-                    <td><input type="text" name="ntxtArtista" value="{{album.2}}"></td>
+              <td>
+                <button type="submit" class="btn btn-success">Guardar</button>
+              </td>
 
-                        {% if errores and errores.ntxtArtista%}
+            </form>
 
-                        <p style="color: red">{{errores.ntxtArtista}}</p>
-                    
-                        {% endif %}
+          </tr>
 
-                        
-
-                    <td><input type="text" name="ntxtAnio" value="{{album.3}}"></td>
-
-                        {% if errores and errores.ntxtAnio%}
-
-                        <p style="color: red">{{errores.ntxtAnio}}</p>
-                        
-                        {% endif %}
-
-
-
-                    <td><button type="submit">Guardar</button></td>
-                    
-                </form>
-            </tr>
-            
-            
         </tbody>
-    </table>
-    
-</body>
-</html>
+        
+      </table>
+
+    </div>
+
+  </div>
+
+</div>
+
+{% endblock %}

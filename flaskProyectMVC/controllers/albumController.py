@@ -63,7 +63,7 @@ def guardar():
             
             insertAlbum(titulo, artista, anio)
             flash('Album se guardó en BD')
-            return redirect(url_for('home'))
+            return redirect(url_for('albums.home'))
             
         except Exception as e:
             mysql.connection.rollback()
